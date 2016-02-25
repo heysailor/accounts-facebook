@@ -2,10 +2,10 @@
 /* jscs:disable requireCamelCaseOrUpperCaseIdentifiers */
 Package.describe({
   summary: 'Login service for Facebook (2.4) accounts (works with cordova)',
-  version: '0.0.6',
+  version: '0.1.7',
   git: 'https://github.com/heysailor/accounts-facebook.git',
   author: 'Nick McIntosh',
-  name: 'heysailor:accounts-facebook-cordova4',
+  name: 'heysailor:accounts-facebook-cordova',
 });
 
 Package.onUse(function config(api) {

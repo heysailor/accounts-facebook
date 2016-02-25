@@ -21,9 +21,9 @@ diff-sequence@1.0.1
 ecmascript@0.1.6
 ecmascript-runtime@0.2.6
 ejson@1.0.7
-facebook@1.2.2
 geojson-utils@1.0.4
-heysailor:accounts-facebook-cordova@0.0.4
+heysailor:accounts-facebook-cordova4@0.0.6
+heysailor:facebook@1.2.3
 html-tools@1.0.5
 htmljs@1.0.5
 http@1.1.1
