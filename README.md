@@ -4,7 +4,7 @@
 
 ** this package is an upgrade to mrt:accounts-facebook-cordova (https://atmospherejs.com/mrt/accounts-facebook-cordova) and it implements Facebook SDK 4 + API 2.4
 
-This packages replaces the accounts-facebook package. It works with [cordova-plugin-facebook4](https://github.com/jeduan/cordova-plugin-facebook4.git) when using cordova and falls back to the facebook package when in a browser.
+This packages replaces the accounts-facebook package. It works with [cordova-plugin-facebook4](https://github.com/jeduan/cordova-plugin-facebook4.git) when using cordova and falls back to the facebook package when in a browser.w
 
 ...
 
