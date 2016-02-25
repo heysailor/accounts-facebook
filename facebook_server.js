@@ -1,6 +1,9 @@
 /* eslint-disable no-param-reassign */
 /* jscs:disable requireCamelCaseOrUpperCaseIdentifiers */
 Accounts.registerLoginHandler(loginRequest => {
+
+  console.log('Handling FB LOGIN');
+
   if (!loginRequest.cordova) {
     return undefined;
   }
@@ -44,7 +47,9 @@ function getIdentity(accessToken, fields) {
 function getProfilePicture(accessToken) {
   try {
     // Minimum FB profile pic size is 180x180px
-    return HTTP.get('https://graph.facebook.com/v2.0/me/picture/?redirect=false&height=180&width=180', {
+    return HTTP.get(
+      'https://graph.facebook.com/v2.0/me/picture/?redirect=false&height=180&width=180',
+    {
       params: { access_token: accessToken },
     }).data.data.url;
   } catch (err) {
