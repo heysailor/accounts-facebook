@@ -1,4 +1,4 @@
-#Accounts Facebook Cordova - MODIFIED BY NICK
+#Accounts Facebook Cordova
 
 [![Join the chat at https://gitter.im/buildhybrid/platform](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/buildhybrid/platform?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
@@ -24,7 +24,7 @@ This packages replaces the accounts-facebook package. It works with [cordova-plu
 
 ##### Package Installation
 ````
-meteor add heysailor:accounts-facebook-cordova
+meteor add heysailor:accounts-facebook-cordova4
 ````
 *Note: For testing you can also add accounts-ui package.*
 
