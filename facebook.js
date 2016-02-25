@@ -1,7 +1,6 @@
 Accounts.oauth.registerService('facebook');
 
 if (Meteor.isClient) {
-
   Meteor.loginWithFacebook = function(options, callback) {
     // support a callback without options
     if (! callback && typeof options === "function") {
@@ -9,9 +8,8 @@ if (Meteor.isClient) {
       options = null;
     }
 
-    var credentialRequestCompleteCallback = Accounts.oauth.credentialRequestCompleteHandler(callback);
-
     var fbLoginSuccess = function (data) {
+      console.log('Logged in with FB Connect:', data);
       data.cordova = true;
 
       Accounts.callLoginMethod({
@@ -20,10 +18,15 @@ if (Meteor.isClient) {
       });
     }
 
+    var credentialRequestCompleteCallback = Accounts.oauth.credentialRequestCompleteHandler(callback);
+
     if (typeof facebookConnectPlugin != "undefined" && Meteor.settings) {
-      facebookConnectPlugin.getLoginStatus( 
-        function (response) { 
+      // console.log('Calling FB Connect');
+      facebookConnectPlugin.getLoginStatus(
+        function (response) {
+          // console.log('FB Connect response:', response);
           if (response.status != "connected") {
+            // console.log('Logging in with FB Connect');
             facebookConnectPlugin.login(Meteor.settings.public.facebook.permissions,
                 fbLoginSuccess,
                 function (error) { console.log("" + error) }
@@ -41,7 +44,7 @@ if (Meteor.isClient) {
 
 } else {
 
-  if (Meteor.settings && 
+  if (Meteor.settings &&
       Meteor.settings.facebook &&
       Meteor.settings.facebook.appId &&
       Meteor.settings.facebook.secret) {
@@ -67,7 +70,7 @@ if (Meteor.isClient) {
         'services.facebook.id', 'services.facebook.username', 'services.facebook.gender'
       ]
     });
-    
+
   } else {
     console.log("Meteor settings for accounts-facebook-cordova not configured correctly.")
   }

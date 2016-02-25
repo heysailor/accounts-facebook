@@ -2,8 +2,6 @@
 /* jscs:disable requireCamelCaseOrUpperCaseIdentifiers */
 Accounts.registerLoginHandler(loginRequest => {
 
-  console.log('Handling FB LOGIN');
-
   if (!loginRequest.cordova) {
     return undefined;
   }
@@ -24,7 +22,6 @@ Accounts.registerLoginHandler(loginRequest => {
 
   _.extend(serviceData, fields);
   _.extend(options.profile, profileFields);
-  options.profile.profilePictureURL = profilePicture;
   serviceData.profilePictureURL = profilePicture;
 
   return Accounts.updateOrCreateUserFromExternalService('facebook', serviceData, options);
@@ -47,9 +44,7 @@ function getIdentity(accessToken, fields) {
 function getProfilePicture(accessToken) {
   try {
     // Minimum FB profile pic size is 180x180px
-    return HTTP.get(
-      'https://graph.facebook.com/v2.0/me/picture/?redirect=false&height=180&width=180',
-    {
+    return HTTP.get('https://graph.facebook.com/v2.0/me/picture/?redirect=false&height=180&width=180', {
       params: { access_token: accessToken },
     }).data.data.url;
   } catch (err) {
