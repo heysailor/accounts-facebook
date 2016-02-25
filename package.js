@@ -9,15 +9,14 @@ Package.describe({
 });
 
 Package.onUse(function config(api) {
-  api.versionsFrom('1.2.0.1');
   api.use([
-    'ecmascript',
-    'accounts-base',
-    'accounts-oauth',
-    'heysailor:facebook',
-    'service-configuration',
-    'http',
-    'underscore',
+    'ecmascript@0.1.6',
+    'accounts-base@1.2.2',
+    'accounts-oauth@1.1.8',
+    'heysailor:facebook@1.2.3',
+    'service-configuration@1.0.5',
+    'http@1.1.1',
+    'underscore@1.0.4',
   ], ['client', 'server']);
 
   // Export Accounts (etc) to packages using this one.
