@@ -10,7 +10,7 @@ if (Meteor.isClient) {
 
     var fbLoginSuccess = function (data) {
       console.log('Logged in with FB Connect:', data);
-      data.cordova = true;
+      data.fbConnect = true;
 
       Accounts.callLoginMethod({
         methodArguments: [data],

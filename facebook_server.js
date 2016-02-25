@@ -2,7 +2,7 @@
 /* jscs:disable requireCamelCaseOrUpperCaseIdentifiers */
 Accounts.registerLoginHandler(loginRequest => {
 
-  if (!loginRequest.cordova) {
+  if (!loginRequest.fbConnect) {
     return undefined;
   }
 
