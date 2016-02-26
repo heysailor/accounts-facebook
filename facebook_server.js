@@ -1,32 +1,66 @@
 /* eslint-disable no-param-reassign */
 /* jscs:disable requireCamelCaseOrUpperCaseIdentifiers */
-Accounts.registerLoginHandler(loginRequest => {
+
+///////////////////////////
+//
+// Set up login handler
+//
+///////////////////////////
+Accounts.registerLoginHandler(function (loginRequest) {
 
   if (!loginRequest.fbConnect) {
     return undefined;
   }
 
-  loginRequest = loginRequest.authResponse;
-  const whitelisted = [
-    'id', 'email', 'name', 'first_name', 'last_name', 'link', 'gender', 'locale', 'age_range',
-  ];
-  const identity = getIdentity(loginRequest.accessToken, whitelisted);
-  const profilePicture = getProfilePicture(loginRequest.accessToken);
-  const serviceData = {
-    accessToken: loginRequest.accessToken,
-    expiresAt: (+new Date) + (1000 * loginRequest.expiresIn),
-  };
-  const fields = _.pick(identity, whitelisted);
-  const options = { profile: { } };
-  const profileFields = _.pick(identity, Meteor.settings.public.facebook.profileFields);
+  const authData = loginRequest.authResponse;
+  const details = Facebook.getUserDetails(authData);
 
-  _.extend(serviceData, fields);
-  _.extend(options.profile, profileFields);
-  serviceData.profilePictureURL = profilePicture;
-
-  return Accounts.updateOrCreateUserFromExternalService('facebook', serviceData, options);
+  return Accounts.updateOrCreateUserFromExternalService('facebook', details.serviceData, details.options);
 });
 
+
+///////////////////////////
+//
+// Change service settings
+//
+///////////////////////////
+if (Meteor.settings &&
+    Meteor.settings.facebook &&
+    Meteor.settings.facebook.appId &&
+    Meteor.settings.facebook.secret) {
+
+  ServiceConfiguration.configurations.remove({
+    service: "facebook"
+  });
+
+  ServiceConfiguration.configurations.insert({
+    service: "facebook",
+    appId: Meteor.settings.facebook.appId,
+    secret: Meteor.settings.facebook.secret
+  });
+
+  Accounts.addAutopublishFields({
+    // publish all fields including access token, which can legitimately
+    // be used from the client (if transmitted over ssl or on
+    // localhost). https://developers.facebook.com/docs/concepts/login/access-tokens-and-types/,
+    // "Sharing of Access Tokens"
+    forLoggedInUser: ['services.facebook'],
+    forOtherUsers: [
+      // https://www.facebook.com/help/167709519956542
+      'services.facebook.id', 'services.facebook.username', 'services.facebook.gender'
+    ]
+  });
+
+} else {
+  console.log("Meteor settings for accounts-facebook-cordova not configured correctly:");
+  console.log("Set Meteor.settings.facebook.appId, Meteor.settings.facebook.secret, Meteor.settings.facebook.profileFields[])")
+}
+
+///////////////////////////
+//
+// Facebook graph helpers
+//
+///////////////////////////
 function getIdentity(accessToken, fields) {
   try {
     return HTTP.get('https://graph.facebook.com/me', {
